@@ -8,6 +8,7 @@ before_install:
 - npm install -g npm@2.14.5
 - npm install -g gulp-cli cordova ionic
 - npm install -g ios-sim
+- npm install -g ios-deploy
 # before_script:
 # - ./scripts/decrypt-key.sh
 # - ./scripts/add-key.sh
