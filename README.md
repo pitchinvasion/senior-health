@@ -1,3 +1,8 @@
+Instructions
+-------------
+`npm install -g cordova`
+Install node v.4
+
 User Stories
 ------------
 ```
