@@ -6,9 +6,9 @@ before_install:
 - brew update
 - npm install -g npm@2.14.5
 - npm install -g gulp-cli cordova ionic
-before_script:
-- ./scripts/decrypt-key.sh
-- ./scripts/add-key.sh
+# before_script:
+# - ./scripts/decrypt-key.sh
+# - ./scripts/add-key.sh
 script:
 - npm install
 - bower install
