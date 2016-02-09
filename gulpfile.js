@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var karmaServer = require('karma').Server;
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
@@ -6,6 +7,11 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var path = require('path');
+var child_process = require('child_process');
+var http = require('http');
+var ecstatic = require('ecstatic');
+var enableDestroy = require('server-destroy');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -49,3 +55,34 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('test', function(done) {
+  new karmaServer({
+    configFile: __dirname + '/test/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+var protractor = require("gulp-protractor").protractor;
+
+(function e2eTests() {
+  var server;
+  gulp.task('server', function(){
+    var port = 8080;
+    server = http.createServer(
+      ecstatic({ root: 'public/.' })
+    ).listen(port);
+    enableDestroy(server);
+    console.log('Server live on ' + port);
+  });
+
+  gulp.task('e2e', ['server'], function(cb) {
+    gulp.src(["./test/e2e/*.js"])
+        .pipe(protractor({
+            configFile: "test/e2e/conf.js",
+            args: ['--baseUrl', 'http://127.0.0.1:8000']
+        }))
+        .on('error', function(e) { throw e; })
+        .on('close', function() { server.destroy(); });
+  });
+})();
