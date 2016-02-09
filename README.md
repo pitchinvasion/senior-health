@@ -2,6 +2,10 @@ User Stories
 ------------
 ```
 As a relative of an elderly person
+So that I can track their health
+I would like to link their Fitbit data to an app
+
+As a relative of an elderly person
 So that I can get information about their health
 I would like to see their heart rate
 
